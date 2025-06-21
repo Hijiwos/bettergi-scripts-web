@@ -291,6 +291,7 @@ const columns = [
   { title: '作者', dataIndex: 'author', width: 200 },
   { title: '版本', dataIndex: 'version', width: 100 },
   { title: '标签', dataIndex: 'tags', slotName: 'tags' },
+  { title: '最后更新', dataIndex: 'lastUpdated', width: 250 },
   { title: '操作', slotName: 'operations' },
 ];
 
@@ -563,6 +564,7 @@ const showDetails = (script) => {
     { label: '描述', value: script.description || '无描述' },
     { label: '标签', value: script.tags },
     { label: 'Hash', value: script.hash },
+    { label: '最后更新', value: script.lastUpdated || '未知' },
   ];
   drawerVisible.value = true;
 };
@@ -589,8 +591,8 @@ const getCategoryTree = (category) => {
       selectable: true
     };
 
-    // 添加图标（原本地无法显示图标）
-    if (!isRoot) {
+    // 添加图标（仅网页端显示图标，逻辑有需要再修改）
+    if (mode !== 'single') {
       treeNode.icon = () => h('img', {
         src: getIconUrl(node.name),
         style: {
@@ -605,7 +607,6 @@ const getCategoryTree = (category) => {
 
     return treeNode;
   };
-
   return [buildTree(category, true)].filter(Boolean);
 };
 
